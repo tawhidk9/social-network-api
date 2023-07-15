@@ -17,11 +17,11 @@ module.exports = {
             .select('-__v')
             .lean();
 
-            if(!user) {
+            if(!users) {
                 return res.status(404).json({ message: 'No user with that ID'})
             }
 
-            res.json(user);
+            res.json(users);
         }catch (err){
             console.log(err);
             return res.status(500).json(err);
@@ -75,7 +75,7 @@ module.exports = {
         try {
           console.log("You are adding a Friend");
           console.log(req.body);
-          const user = await User.findOneAndUpdate(
+          const user = await Users.findOneAndUpdate(
             { _id: req.params.userId },
             { $addToSet: { friends: req.params.friendId } },
             { runValidators: true, new: true }
@@ -95,7 +95,7 @@ module.exports = {
       
       async deleteFriend(req, res) {
         try {
-          const user = await User.findOneAndUpdate(
+          const user = await Users.findOneAndUpdate(
             { _id: req.params.userId },
             { $pull: { friends: req.params.friendId } },
             { runValidators: true, new: true }

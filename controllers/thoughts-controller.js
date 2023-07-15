@@ -8,7 +8,7 @@ const reactionCount = async () => {
 module.exports = {
   async getThoughts(req, res) {
     try {
-      const thoughts = await Thought.find();
+      const thoughts = await Thoughts.find();
       const thoughtObj = {
         thoughts,
         reactionCount: await reactionCount(),
@@ -101,7 +101,7 @@ module.exports = {
     try{
       const thought = await Thoughts.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $pull: { reactions: { reactionId: req.body.reactionId } } },
+        { $pull: { reactionId: req.body.reactionId } },
         { runValidators: true, new: true }
       );
 
